@@ -1,0 +1,5 @@
+{
+    "context" : "endpoint/createRoles",
+    "type" : "text/javascript",
+    "file" : "script/createRoles.js"
+}
