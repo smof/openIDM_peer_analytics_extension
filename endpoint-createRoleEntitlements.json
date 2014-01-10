@@ -1,0 +1,5 @@
+{
+    "context" : "endpoint/createRoleEntitlements",
+    "type" : "text/javascript",
+    "file" : "script/createRoleEntitlements.js"
+}
