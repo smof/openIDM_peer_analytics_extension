@@ -26,4 +26,9 @@ something like job title, manager, department or so on.  userAttribute is the un
 <br/>
 Returns - JSON object containing business roles and the users associated with them.  This file can then be saved as a custom endpoint and be read during provisioning.
 <br>
-
+<br>
+<b>http://server:port/openidm/endpoint/createRolesEntitlements?sourceSystem=AD&sourceAttribute=groups</b>
+<br>
+Args - sourceSystem: the source system that OpenIDM is going to analyse from an entitlements perspective.  A target system (AD, LDAP, RACF etc).  The mining engine only mines one system at once.  sourceAttribute is the system attribute that contains the entitlements.
+<br>
+Returns - JSON object containing the entitlements on a per role basis.
