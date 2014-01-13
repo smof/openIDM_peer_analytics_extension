@@ -1,14 +1,46 @@
-//Simon Moffatt (C) 2013 - Part of RolesCreator library
-//Creates role entitlements JSON object that contains role names and associated entitlements
-//Assumes a endpoint-roles.json custom endpoint file exists that contains roles and user unique identifiers.  Create using createRoles endpoint.
-//HTTP Verb - POST
+//Simon Moffatt (C) 2013 - Part of RolesCreator library - https://github.com/smof/openIDM_roles_creator_extension
+//Creates role entitlements JSON object that contains role names and de-duped entitlements.
+//Only entitlements that are common across ALL users within a particular role object are saved to the roleEntitlementa array
+//
+//Verb: POST
+//Data: JSON of roleNames and array of unique user ID's - see result of createRoles
+//Args: sourceSystem - system to analyse. Eg AD or RACF etc
+//Args: sourceAttribute - attribute within sourceSystem that contains user entitlements.  Eg memberOf or groups etc
 
-//Definitions
+//Returns:
+//{"roleName" : ["entitlement1",...,"entitlementN"]}
+
+//Logging
+logger.info("Endpoint Request {}", request);
+
+//Make sure the request coming in is a action/POST
+if (request.method !== "action") {
+    throw { 
+        "openidmCode" : 403, 
+        "message" : "Access denied"
+    } 
+}
+
+//Variable declarations
 var roleUsers = {}, roleEntitlements = {};
 
 //Pull in args as given via URL
 var sourceSystem = request.params['sourceSystem'];
 var sourceAttribute = request.params['sourceAttribute'];
+
+//Check that args via URL are actually present
+if (sourceSystem == null) {
+	
+	throw "Missing Arg : sourceSystem";
+	
+}
+if (sourceAttribute == null) {
+	
+	throw "Missing Arg : sourceAttribute";
+	
+}
+
+
 
 //Pull in data payload
 var roleUsers = request.value;

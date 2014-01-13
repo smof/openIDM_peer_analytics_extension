@@ -28,6 +28,22 @@ var roles = {};
 sourceSystem = request.params['sourceSystem'] || "managed/user"; //default to managed/user
 sourceAttribute = request.params['sourceAttribute'];
 userAttribute = request.params["userAttribute"];
+
+//Check that args via URL are actually present
+if (sourceAttribute == null) {
+	
+	throw "Missing Arg : sourceAttribute";
+	
+}
+if (userAttribute == null) {
+	
+	throw "Missing Arg : userAttribute";
+	
+}
+
+
+
+
 //Query
 users = openidm.query(sourceSystem, { "_queryId" : "query-all"});
 
