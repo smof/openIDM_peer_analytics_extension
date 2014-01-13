@@ -28,9 +28,7 @@ var roles = {};
 sourceSystem = request.params['sourceSystem'] || "managed/user"; //default to managed/user
 sourceAttribute = request.params['sourceAttribute'];
 userAttribute = request.params["userAttribute"];
-
 //Query
-//users = openidm.query("managed/user", { "_queryId" : "query-all"});
 users = openidm.query(sourceSystem, { "_queryId" : "query-all"});
 
 //Get a list of unique role names based on chosen system attribute ///////////////////////////////////////////////////////////////////////////////////
@@ -46,13 +44,13 @@ for(i=0; i < users.result.length; i++) {
 //de-dupe array
 roleNames = roleNames.filter(function (v, i, a) { return a.indexOf (v) == i });
 
+logger.info("Roles Named {}",roleNames);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 //Find all users that match the business role attribute and pump to businessRoles object//////////////////////////////////////////////////////////////
 
-
-//push role names as keys in businessRoles object
+//Push role names as keys in businessRoles object
 for(i=0; i < roleNames.length; i++) {
     
   roleName = roleNames[i];
@@ -78,4 +76,6 @@ for(role in roles) {
 
 
 //return obj
+logger.info("Roles returned {}",roles);
 roles;
+
