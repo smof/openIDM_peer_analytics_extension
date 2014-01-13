@@ -26,14 +26,24 @@ for (var role in roleUsers) {
 	for (i=0; i < users.length; i++) {
 	
 		//Read the user object from the source system
-		systemUserObj = openidm.read("system/" + sourceSystem + "/account/" + users[i]);
-		//Find the sourceAttribute that contains the entitements
-		if (systemUserObj.length > 0) {
-			userEntitlements = systemUserObj[sourceAttribute][0].split(";"); //Hack when testing using CSV connector
-			allUserEntitlements.push(userEntitlements);
-		}
-		//Add user entitlements to array of all entitlements
+		systemUserObj = openidm.read("system/" + sourceSystem + "/account/" + users[i]) || [];
 		
+		//Find the sourceAttribute that contains the entitements
+		if (systemUserObj) {
+		
+			
+			//Pull out user entitlements from source system
+			userEntitlements = systemUserObj[sourceAttribute] || [];
+			
+			if (userEntitlements.length > 0) {
+			
+				userEntitlements = userEntitlements[0].split(";"); //Hack when testing using CSV connector
+			}
+			
+			//Add user entitlements to array of all entitlements
+			allUserEntitlements.push(userEntitlements);
+		}                                                                        
+				
 	}
 	
 	//Create role key and value as array of intersected entitlements
