@@ -60,12 +60,20 @@ if (roles == null) {
 
 
 //Find user on target system
-var systemUserObj = openidm.read("system/" + sourceSystem + "/account/" + user) || {}; //assumes managed/user object id is same as uid on target system
-var systemUserEntitlements = systemUserObj[sourceAttribute];
+var systemUserObj = openidm.read("system/" + sourceSystem + "/account/" + user); //assumes managed/user object id is same as uid on target system
 
-//Hack to if using CSV connector to split entitlements to array
-systemUserEntitlements = systemUserEntitlements[0].split(";");
+if (systemUserObj != null) {
 
+	var systemUserEntitlements = systemUserObj[sourceAttribute];
+
+	//Hack to if using CSV connector to split entitlements to array
+	systemUserEntitlements = systemUserEntitlements[0].split(";");
+}
+
+else {
+	throw "User " +user + " not found in " + sourceSystem
+
+}
 
 
 //Iterate over roles payload, combine entitlements and dedupe
