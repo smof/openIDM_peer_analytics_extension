@@ -1,5 +1,5 @@
-//Simon Moffatt (C) 2013 - Part of RolesCreator library - https://github.com/smof/openIDM_roles_creator_extension
-//Creates shell role JSON object that contains role names and unique user identifiers in an array.
+//Simon Moffatt (C) 2013 - Part of Peer Analytics library - https://github.com/smof/openIDM_peer_analytics_extension
+//Creates shell grouping JSON object that contains role / peer grouping names and unique user identifiers in an array.
 //
 //Verb: GET
 //Args: sourceSystem - system to analyse (currently managed/user)
@@ -22,7 +22,7 @@ if (request.method !== "query") {
 
 //Variable declaration
 var roleNames = [];
-var roles = {};
+var peerAnalysis = {};
 
 //Pull in args given via URL
 sourceSystem = request.params['sourceSystem'] || "managed/user"; //default to managed/user
@@ -70,19 +70,19 @@ logger.info("Roles Named {}",roleNames);
 for(i=0; i < roleNames.length; i++) {
     
   roleName = roleNames[i];
-  roles[roleName] = [];
+  peerAnalysis[roleName] = [];
     
 };
 
 //iterate over users and push out employeeid into value for roleName key
-for(role in roles) {
+for(role in peerAnalysis) {
   
 	//Iterate over all users (is this efficient?)
 	for(i=0; i < users.result.length; i++) {
   
 		if (users.result[i][sourceAttribute] === role) {
 			
-			roles[role].push(users.result[i][userAttribute]);
+			peerAnalysis[role].push(users.result[i][userAttribute]);
 			
 		} //end if
 		
@@ -92,6 +92,6 @@ for(role in roles) {
 
 
 //return obj
-logger.info("Roles returned {}",roles);
-roles;
+logger.info("Roles returned {}",peerAnalysis);
+peerAnalysis;
 

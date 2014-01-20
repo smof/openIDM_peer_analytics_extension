@@ -1,0 +1,5 @@
+{
+    "context" : "endpoint/peerEntitlements",
+    "type" : "text/javascript",
+    "file" : "script/peerEntitlements.js"
+}

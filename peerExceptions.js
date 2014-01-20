@@ -1,8 +1,8 @@
-//Simon Moffatt (C) 2013 - Part of RolesCreator library - https://github.com/smof/openIDM_roles_creator_extension
-//Performs a diff between existing directly associated user entitlements on the target system and those given via a role.  Result is an array of entitlements or 'exceptions' on the target system
+//Simon Moffatt (C) 2013 - Part of Peer Analytics library - https://github.com/smof/openIDM_peer_analytics_extension
+//Performs a diff between existing directly associated user entitlements on the target system and those given via a role or peer grouping.  Result is an array of entitlements or 'exceptions' on the target system
 //
 //Verb: POST
-//Data: JSON of roles and users that need analysing - output of createRoles for example
+//Data: JSON of roles and users that need analysing - output of peerAnalysis for example
 //
 //Args: sourceSystem - system to analyse. Eg AD or RACF etc
 //Args: sourceAttribute - attribute within sourceSystem that contains user entitlements.  Eg memberOf or groups etc
@@ -23,7 +23,7 @@ if (request.method !== "action") {
 }
 
 //Variable declarations
-var userExceptions = {};
+var peerExceptions = {};
 
 //Pull in args as given via URL
 var sourceSystem = request.params['sourceSystem'];
@@ -97,9 +97,9 @@ allRoleEntitlements = dedupeArray(allRoleEntitlements);
 exceptions = diffArray(systemUserEntitlements, allRoleEntitlements)
 
 //Populate return object
-userExceptions[user + "_Effective_Entitlements"] = systemUserEntitlements;
-userExceptions["Roles_Effective_Entitlements"] = allRoleEntitlements;
-userExceptions["Exceptions"] = exceptions
+peerExceptions[user + "_Effective_Entitlements"] = systemUserEntitlements;
+peerExceptions["Peers_Effective_Entitlements"] = allRoleEntitlements;
+peerExceptions["Exceptions"] = exceptions
 
 
 
@@ -130,6 +130,6 @@ function diffArray(a1, a2)
     
 
 //Return roleEntitlements object 
-logger.info("Exceptions Returned {}", userExceptions);
-userExceptions;
+logger.info("Exceptions Returned {}", peerExceptions);
+peerExceptions;
 

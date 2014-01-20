@@ -1,0 +1,5 @@
+{
+    "context" : "endpoint/peerExceptions",
+    "type" : "text/javascript",
+    "file" : "script/peerExceptions.js"
+}

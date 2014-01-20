@@ -1,4 +1,4 @@
-<b>RolesCreator Extension for OpenIDM</b>
+<b>Peer Analtics Extension for OpenIDM</b>
 <br/>
 <br/>
 This set of libraries can help create role objects, role entitlements and user entitlement exceptions, as part of a set of custom endpoints when used with ForgeRock's OpenIDM product.
@@ -17,9 +17,9 @@ Copy the endpoint- prefixed files into the openidm/conf directory, and edit the 
 Copy all .js Javascript files into the openidm/script directory
 <br/>
 <br/>
-<b>USAGE -createRoles</b>
+<b>USAGE -peerAnalysis</b>
 <br/>
-<b>GET http://server:port/openidm/endpoint/createRoles?sourceSystem=managed/user&sourceAttribute=jobTitle&userAttribute=employeeNumber</b>
+<b>GET http://server:port/openidm/endpoint/peerAnalysis?sourceSystem=managed/user&sourceAttribute=jobTitle&userAttribute=employeeNumber</b>
 <br/>
 Args - sourceSystem: the source system that OpenIDM is managing and the system used for mining business roles.  Generally an auth source such as HR, or the managed/user source itself.  sourceAttribute is what the role mining process will analyse.  Generally
 something like job title, manager, department or so on.  userAttribute is the unique user attribute used to populate the role object.  Generally something like email, uid etc.
@@ -27,9 +27,9 @@ something like job title, manager, department or so on.  userAttribute is the un
 Returns - JSON object containing business roles and the users associated with them.  This file can then be saved as a custom endpoint and be read during provisioning.
 <br>
 <br>
-<b>USAGE - createRoleEntitlements</b>
+<b>USAGE - peerEntitlements</b>
 <br/>
-<b>POST http://server:port/openidm/endpoint/createRolesEntitlements?sourceSystem=AD&sourceAttribute=groups</b>
+<b>POST http://server:port/openidm/endpoint/peerEntitlements?sourceSystem=AD&sourceAttribute=groups</b>
 <br>
 Args - sourceSystem: the source system that OpenIDM is going to analyse from an entitlements perspective.  A target system (AD, LDAP, RACF etc).  The mining engine only mines one system at once.  sourceAttribute is the system attribute that contains the entitlements.
 <br>
@@ -38,9 +38,9 @@ Also requires a JSON payload containing rolename to users (output of createRoles
 Returns - JSON object containing the entitlements on a per role basis.
 <br>
 <br>
-<b>USAGE - findUserExceptions</b>
+<b>USAGE - peerExceptions</b>
 <br/>
-<b>POST http://server:port/openidm/endpoint/findUserExceptions?sourceSystem=AD&sourceAttribute=groups&user=J100000</b>
+<b>POST http://server:port/openidm/endpoint/peerExceptions?sourceSystem=AD&sourceAttribute=groups&user=J100000</b>
 <br>
 Args - sourceSystem: the source system that OpenIDM is going to analyse from an entitlements perspective.  A target system (AD, LDAP, RACF etc).  The mining engine only mines one system at once.  sourceAttribute is the system attribute that contains the entitlements.
 user is the userid to analyse.

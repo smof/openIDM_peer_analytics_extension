@@ -1,9 +1,9 @@
-//Simon Moffatt (C) 2013 - Part of RolesCreator library - https://github.com/smof/openIDM_roles_creator_extension
-//Creates role entitlements JSON object that contains role names and de-duped entitlements.
-//Only entitlements that are common across ALL users within a particular role object are saved to the roleEntitlementa array
+//Simon Moffatt (C) 2013 - Part of Peer Analytics library - https://github.com/smof/openIDM_peer_analytics_extension
+//Creates role / peer entitlements JSON object that contains role / peer names and de-duped entitlements.
+//Only entitlements that are common across ALL users within a particular role / peer grouping are saved to the peerEntitlements array
 //
 //Verb: POST
-//Data: JSON of roleNames and array of unique user ID's - see result of createRoles
+//Data: JSON of roleNames / peerGrouping and array of unique user ID's - see result of peerAnalysis
 //Args: sourceSystem - system to analyse. Eg AD or RACF etc
 //Args: sourceAttribute - attribute within sourceSystem that contains user entitlements.  Eg memberOf or groups etc
 
@@ -22,7 +22,7 @@ if (request.method !== "action") {
 }
 
 //Variable declarations
-var roleUsers = {}, roleEntitlements = {};
+var peerAnalysis = {}, peerEntitlements = {};
 
 //Pull in args as given via URL
 var sourceSystem = request.params['sourceSystem'];
@@ -43,13 +43,13 @@ if (sourceAttribute == null) {
 
 
 //Pull in data payload
-var roleUsers = request.value;
+var peerAnalysis = request.value;
 
-//Iterate over roleUsers and pull out role name and push to roleEntitlements object
-for (var role in roleUsers) {
+//Iterate over peerAnalysis and pull out role name and push to peerEntitlements object
+for (var role in peerAnalysis) {
     
 	//Pull out users for each role
-	var users = roleUsers[role];
+	var users = peerAnalysis[role];
 	
   	//An array of arrays containing all user entitlements
 	var allUserEntitlements = [];
@@ -81,10 +81,10 @@ for (var role in roleUsers) {
 	//Create role key and value as array of intersected entitlements
 	if (allUserEntitlements.length > 0) {
 		
-		roleEntitlements[role] = arrayIntersection.apply(this,allUserEntitlements);
+		peerEntitlements[role] = arrayIntersection.apply(this,allUserEntitlements);
 	}
 	else {
-		roleEntitlements[role] = allUserEntitlements;
+		peerEntitlements[role] = allUserEntitlements;
 	}
 	
 }  
@@ -119,6 +119,6 @@ function arrayIntersection(/* pass all arrays here */) {
 //Array intersection function /////////////////////////////////////////////////////////////////////////////////////////////
     
 
-//Return roleEntitlements object 
-roleEntitlements;
+//Return peerEntitlements object 
+peerEntitlements;
 
