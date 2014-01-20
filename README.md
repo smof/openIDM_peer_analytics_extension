@@ -1,4 +1,4 @@
-<b>Peer Analtics Extension for OpenIDM</b>
+<b>Peer Analytics Extension for OpenIDM</b>
 <br/>
 <br/>
 This set of libraries can help create role objects, role entitlements and user entitlement exceptions, as part of a set of custom endpoints when used with ForgeRock's OpenIDM product.
